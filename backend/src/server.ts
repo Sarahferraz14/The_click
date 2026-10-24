@@ -2,6 +2,7 @@ import "dotenv/config";
 import express from "express";
 import path from "node:path";
 import authRoutes from "./routes/auth.routes";
+import faceRoutes from "./routes/faces_routes"
 
 const app = express();
 app.use(express.json());
@@ -20,3 +21,5 @@ const port = Number(process.env.PORT) || 3000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+app.use("/faces", faceRoutes);
