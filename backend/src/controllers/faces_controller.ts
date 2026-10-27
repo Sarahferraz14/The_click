@@ -86,3 +86,63 @@ export async function enrollFace(req: AuthRequest, res: Response) {
         return res.status(500).json({ error: 'Erro interno do servidor' });
     }
 }
+
+const MATCH_THRESHOLD = 0.60
+
+export async function recognizeFace(req: AuthRequest, res: Response) {
+    try {
+        const file = req.file;
+        if(!file) return res.status(400).json({ error: 'Foto não enviada!' });
+
+        const member = await prisma.homeMember.findFirst({
+            where: { user_id: req.userId, role: 'owner' },
+        });
+        if(!member) return res.status(404).json({ error: 'Nenhuma cadastrada' });
+
+        const form = new FormData();
+        form.append('image', new Blob([new Uint8Array(file.buffer)], { type: file.mimetype }), 'face.jpg');
+        form.append('angle', 'any');
+
+        let r;
+        try {
+            r = await fetch(`${FACE_URL}/embed`, { method: 'POST', body: form });
+        } catch {
+            return res.status(503).json({ error: 'Serviço de reconhecimento indisponível!' });
+        }
+        const out: any = await r.json().catch(() => null);
+        if(!r.ok || !out) {
+            return res.status(422).json({ error: out?.detail ?? 'Não foi possível porcessar o rosto!' });
+        }
+
+        const vec = `[${out.embedding.join(',')}]`;
+        const rows = await prisma.$queryRaw<{ person_id: string; full_name: string; similarity: number }[]>`
+            SELECT p.id AS person_id, p.full_name, 1 - (fe.embedding <=> ${vec}::vector) AS similarity
+            FROM face_embeddings fe
+            JOIN known_people p ON p.id = fe.person_id
+            WHERE p.home_id = ${member.home_id}::uuid
+            ORDER BY fe.embedding <=> ${vec}::vector
+            LIMIT 1`;
+
+        const best = rows[0];
+        const recognized = !!best && best.similarity >= MATCH_THRESHOLD;
+
+        await prisma.event.create({
+            data: {
+                home_id: member.home_id,
+                person_id: recognized ? best.person_id : null,
+                kind: recognized ? 'face_recognized' : 'face_unknown',
+                source: 'camera',
+                confidence: best ? best.similarity : null,
+            },
+        });
+
+        return res.json(
+            recognized
+                ? { recognized: true, name: best.full_name, confidence: best.similarity }
+                : { recognized: false }
+        );
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'Erro interno do servidor.' });
+    }
+}

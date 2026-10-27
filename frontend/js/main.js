@@ -1,12 +1,12 @@
 const $ = s => document.querySelector(s), app = $('#app'), L = ['pt', 'en', 'es', 'fr'];
-const I = { mail: "M4 6h16v12H4z M4 7l8 6 8-6", lock: "M6 11h12v9H6z M8 11V8a4 4 0 018 0v3", user: "M12 12a4 4 0 100-8 4 4 0 000 8z M4 21c0-4 4-6 8-6s8 2 8 6", eye: "M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z M12 15a3 3 0 100-6 3 3 0 000 6z", bulb: "M9 18h6 M10 21h4 M12 3a6 6 0 00-4 10c1 1 1 2 1 3h6c0-1 0-2 1-3a6 6 0 00-4-10z", users: "M9 11a3.5 3.5 0 100-7 3.5 3.5 0 000 7z M2 20c0-3.5 3-5 7-5s7 1.5 7 5 M17 4a3.5 3.5 0 010 7 M18 15c2.5.5 4 2 4 5", set: "M4 7h10 M18 7h2 M4 17h2 M10 17h10 M16 5v4 M8 15v4", globe: "M12 21a9 9 0 100-18 9 9 0 000 18z M3 12h18 M12 3c3 3 3 15 0 18 M12 3c-3 3-3 15 0 18", face: "M4 8V5a1 1 0 011-1h3 M16 4h3a1 1 0 011 1v3 M20 16v3a1 1 0 01-1 1h-3 M8 20H5a1 1 0 01-1-1v-3 M9 10v1 M15 10v1 M9 15c1 1 5 1 6 0", back: "M15 5l-7 7 7 7", plus: "M12 5v14 M5 12h14", check: "M5 12l5 5 10-10", out: "M9 4H5v16h4 M16 8l4 4-4 4 M20 12H9", chev: "M9 5l7 7-7 7", trash: "M5 7h14 M9 7V4h6v3 M7 7l1 13h8l1-13", clock: "M12 21a9 9 0 100-18 9 9 0 000 18z M12 7v5l3 2", gate: "M4 21V8l8-5 8 5v13 M9 21v-7h6v7" };
+const I = { mail: "M4 6h16v12H4z M4 7l8 6 8-6", lock: "M6 11h12v9H6z M8 11V8a4 4 0 018 0v3", user: "M12 12a4 4 0 100-8 4 4 0 000 8z M4 21c0-4 4-6 8-6s8 2 8 6", eye: "M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z M12 15a3 3 0 100-6 3 3 0 000 6z", bulb: "M9 18h6 M10 21h4 M12 3a6 6 0 00-4 10c1 1 1 2 1 3h6c0-1 0-2 1-3a6 6 0 00-4-10z", users: "M9 11a3.5 3.5 0 100-7 3.5 3.5 0 000 7z M2 20c0-3.5 3-5 7-5s7 1.5 7 5 M17 4a3.5 3.5 0 010 7 M18 15c2.5.5 4 2 4 5", set: "M4 7h10 M18 7h2 M4 17h2 M10 17h10 M16 5v4 M8 15v4", globe: "M12 21a9 9 0 100-18 9 9 0 000 18z M3 12h18 M12 3c3 3 3 15 0 18 M12 3c-3 3-3 15 0 18", face: "M4 8V5a1 1 0 011-1h3 M16 4h3a1 1 0 011 1v3 M20 16v3a1 1 0 01-1 1h-3 M8 20H5a1 1 0 01-1-1v-3 M9 10v1 M15 10v1 M9 15c1 1 5 1 6 0", back: "M15 5l-7 7 7 7", plus: "M12 5v14 M5 12h14", check: "M5 12l5 5 10-10", out: "M9 4H5v16h4 M16 8l4 4-4 4 M20 12H9", chev: "M9 5l7 7-7 7", trash: "M5 7h14 M9 7V4h6v3 M7 7l1 13h8l1-13", clock: "M12 21a9 9 0 100-18 9 9 0 000 18z M12 7v5l3 2", gate: "M4 21V8l8-5 8 5v13 M9 21v-7h6v7", shield: "M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z" };
 const ic = (n, s = 20) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${I[n]}"/></svg>`;
-const K = "hi,email,pass,enter,noacc,create,name,confirm,hasacc,forgot,sendlink,newpass,save,sent,lang,face,routines,family,settings,logout,lights,on,off,days,owner,guest,invite,perms,start,front,left,right,done,bademail,rule,nomatch,auto,newr,badlogin,gate,living,garden,garage,bedroom".split(',');
+const K = "hi,email,pass,enter,noacc,create,name,confirm,hasacc,forgot,sendlink,newpass,save,sent,lang,face,routines,family,settings,logout,lights,on,off,days,owner,guest,invite,perms,start,front,left,right,done,bademail,rule,nomatch,auto,newr,badlogin,gate,living,garden,garage,bedroom,sec,gopen,gclosed,goffline,bopen,bclose,alarm,armed,disarmed".split(',');
 const D = {
-    pt: "Bem-vindo de volta|E-mail|Senha|Entrar|Não tem conta?|Criar conta|Nome completo|Confirmar senha|Já tenho conta|Esqueci a senha|Enviar link|Nova senha|Salvar|Enviamos um link de redefinição para o seu e-mail|Idioma|Reconhecimento facial|Rotinas|Família|Ajustes|Sair|Luzes|Ligar às|Desligar às|Dias|Dono|Convidado|Adicionar membro|Permissões|Iniciar captura|Olhe de frente|Vire à esquerda|Vire à direita|Rosto cadastrado|E-mail inválido|8+ caracteres, número e maiúscula|Senhas diferentes|Idioma detectado automaticamente|Nova rotina|Credenciais inválidas|Portão|Sala|Jardim|Garagem|Quarto".split('|'),
-    en: "Welcome back|Email|Password|Sign in|No account?|Create account|Full name|Confirm password|I have an account|Forgot password|Send link|New password|Save|We sent a reset link to your email|Language|Face recognition|Routines|Family|Settings|Log out|Lights|Turn on at|Turn off at|Days|Owner|Guest|Add member|Permissions|Start capture|Look straight ahead|Turn left|Turn right|Face registered|Invalid email|8+ characters, a number and a capital|Passwords differ|Language detected automatically|New routine|Invalid credentials|Gate|Living room|Garden|Garage|Bedroom".split('|'),
-    es: "Bienvenido de nuevo|Correo|Contraseña|Entrar|¿No tienes cuenta?|Crear cuenta|Nombre completo|Confirmar contraseña|Ya tengo cuenta|Olvidé mi contraseña|Enviar enlace|Nueva contraseña|Guardar|Enviamos un enlace de restablecimiento a tu correo|Idioma|Reconocimiento facial|Rutinas|Familia|Ajustes|Salir|Luces|Encender a las|Apagar a las|Días|Dueño|Invitado|Añadir miembro|Permisos|Iniciar captura|Mira al frente|Gira a la izquierda|Gira a la derecha|Rostro registrado|Correo inválido|8+ caracteres, un número y una mayúscula|Contraseñas distintas|Idioma detectado automáticamente|Nueva rutina|Credenciales inválidas|Portón|Sala|Jardín|Garaje|Dormitorio".split('|'),
-    fr: "Bon retour|E-mail|Mot de passe|Connexion|Pas de compte ?|Créer un compte|Nom complet|Confirmer le mot de passe|J'ai un compte|Mot de passe oublié|Envoyer le lien|Nouveau mot de passe|Enregistrer|Nous avons envoyé un lien de réinitialisation à votre e-mail|Langue|Reconnaissance faciale|Routines|Famille|Réglages|Déconnexion|Lumières|Allumer à|Éteindre à|Jours|Propriétaire|Invité|Ajouter un membre|Autorisations|Démarrer la capture|Regardez droit devant|Tournez à gauche|Tournez à droite|Visage enregistré|E-mail invalide|8+ caractères, un chiffre et une majuscule|Mots de passe différents|Langue détectée automatiquement|Nouvelle routine|Identifiants invalides|Portail|Salon|Jardin|Garage|Chambre".split('|')
+    pt: "Bem-vindo de volta|E-mail|Senha|Entrar|Não tem conta?|Criar conta|Nome completo|Confirmar senha|Já tenho conta|Esqueci a senha|Enviar link|Nova senha|Salvar|Enviamos um link de redefinição para o seu e-mail|Idioma|Reconhecimento facial|Rotinas|Família|Ajustes|Sair|Luzes|Ligar às|Desligar às|Dias|Dono|Convidado|Adicionar membro|Permissões|Iniciar captura|Olhe de frente|Vire à esquerda|Vire à direita|Rosto cadastrado|E-mail inválido|8+ caracteres, número e maiúscula|Senhas diferentes|Idioma detectado automaticamente|Nova rotina|Credenciais inválidas|Portão|Sala|Jardim|Garagem|Quarto|Segurança|Aberto|Fechado|Offline|Abrir|Fechar|Modo alarme|Armado|Desarmado".split('|'),
+    en: "Welcome back|Email|Password|Sign in|No account?|Create account|Full name|Confirm password|I have an account|Forgot password|Send link|New password|Save|We sent a reset link to your email|Language|Face recognition|Routines|Family|Settings|Log out|Lights|Turn on at|Turn off at|Days|Owner|Guest|Add member|Permissions|Start capture|Look straight ahead|Turn left|Turn right|Face registered|Invalid email|8+ characters, a number and a capital|Passwords differ|Language detected automatically|New routine|Invalid credentials|Gate|Living room|Garden|Garage|Bedroom|Security|Open|Closed|Offline|Open|Close|Alarm mode|Armed|Disarmed".split('|'),
+    es: "Bienvenido de nuevo|Correo|Contraseña|Entrar|¿No tienes cuenta?|Crear cuenta|Nombre completo|Confirmar contraseña|Ya tengo cuenta|Olvidé mi contraseña|Enviar enlace|Nueva contraseña|Guardar|Enviamos un enlace de restablecimiento a tu correo|Idioma|Reconocimiento facial|Rutinas|Familia|Ajustes|Salir|Luces|Encender a las|Apagar a las|Días|Dueño|Invitado|Añadir miembro|Permisos|Iniciar captura|Mira al frente|Gira a la izquierda|Gira a la derecha|Rostro registrado|Correo inválido|8+ caracteres, un número y una mayúscula|Contraseñas distintas|Idioma detectado automáticamente|Nueva rutina|Credenciales inválidas|Portón|Sala|Jardín|Garaje|Dormitorio|Seguridad|Abierto|Cerrado|Sin conexión|Abrir|Cerrar|Modo alarma|Armado|Desarmado".split('|'),
+    fr: "Bon retour|E-mail|Mot de passe|Connexion|Pas de compte ?|Créer un compte|Nom complet|Confirmer le mot de passe|J'ai un compte|Mot de passe oublié|Envoyer le lien|Nouveau mot de passe|Enregistrer|Nous avons envoyé un lien de réinitialisation à votre e-mail|Langue|Reconnaissance faciale|Routines|Famille|Réglages|Déconnexion|Lumières|Allumer à|Éteindre à|Jours|Propriétaire|Invité|Ajouter un membre|Autorisations|Démarrer la capture|Regardez droit devant|Tournez à gauche|Tournez à droite|Visage enregistré|E-mail invalide|8+ caractères, un chiffre et une majuscule|Mots de passe différents|Langue détectée automatiquement|Nouvelle routine|Identifiants invalides|Portail|Salon|Jardin|Garage|Chambre|Seguridad|Abierto|Cerrado|Sin conexión|Abrir|Cerrar|Modo alarma|Armado|Desarmado".split('|')
 };
 const nl = (navigator.language || 'pt').slice(0, 2);
 let S = {
@@ -30,7 +30,7 @@ const V = {
     forgot: () => `<div class="scr">${hd(t('forgot'), 'login')}${S.step == 1 ? fld('em', 'mail', 'email', t('email'), 'email') + `<button class="btn" data-a="send">${t('sendlink')}</button>` : `<div class="card row" style="border-color:var(--g);color:var(--g)">${ic('check')}<span style="color:var(--t);font-size:14px">${t('sent')}</span></div>`}</div>`,
     reset: () => `<div class="scr">${hd(t('newpass'), 'login')}${fld('p1', 'lock', 'password', t('newpass'), 'pass', 1)}${str}${fld('p2', 'lock', 'password', t('confirm'), 'match', 1)}<p class="err" id="err"></p><button class="btn" data-a="reset">${t('save')}</button></div>`,
     home: () => {
-        const T = [['r', 'clock', t('routines')], ['f', 'users', t('family')], ['s', 'set', t('settings')]];
+        const T = [['r', 'clock', t('routines')], ['f', 'users', t('family')], ['g', 'shield', t('sec')], ['s', 'set', t('settings')]];
         return `<div class="scr"><p class="sub" style="margin:0 0 4px">${t('hi')}</p><h1>${S.me.name.split(' ')[0]}</h1>${H[S.tab]()}</div>${S.tab == 'r' ? `<button class="fab" data-a="go" data-p="newr">${ic('plus', 26)}</button>` : ''}<nav class="tabs">${T.map(x => `<button class="${S.tab == x[0] ? 'on' : ''}" data-a="tab" data-p="${x[0]}">${ic(x[1], 22)}${x[2]}</button>`).join('')}</nav>`
     },
     newr: () => `<div class="scr">${hd(t('newr'), 'home')}<p class="lbl">${t('lights')}</p><div class="chips lc">${['living', 'garden', 'garage', 'bedroom'].map((l, i) => `<button class="chip ${i ? '' : 'on'}" data-a="pick" data-p="${l}">${t(l)}</button>`).join('')}</div><div class="f"><label class="in">${ic('bulb')}<span class="lb">${t('on')}</span><input id="t1" type="time" value="18:00"></label></div><div class="f"><label class="in">${ic('clock')}<span class="lb">${t('off')}</span><input id="t2" type="time" value="23:00"></label></div><p class="lbl">${t('days')}</p><div class="dg">${[0, 1, 2, 3, 4, 5, 6].map(j => `<button class="day on" data-a="dtog">${dn(j)}</button>`).join('')}</div><button class="btn" data-a="saver">${t('save')}</button></div>`,
@@ -43,7 +43,17 @@ const V = {
 const H = {
     r: () => `${S.sch.map((s, i) => `<div class="card"><div class="row"><div class="ico">${ic('bulb')}</div><div class="fx"><b>${t(s.l)}</b><small>${ic('clock', 12)} ${s.a1} - ${s.a2}</small></div><button class="ib d" style="border:0;width:34px" data-a="dels" data-p="${i}">${ic('trash', 18)}</button>${sw(s.on, 'ts', i)}</div><div class="days">${s.d.map((x, j) => `<span class="${x ? 'on' : ''}">${dn(j)}</span>`).join('')}</div></div>`).join('')}<div style="height:70px"></div>`,
     f: () => `<div class="card row"><div class="av">${S.me.name[0].toUpperCase()}</div><div class="fx"><b>${S.me.name}</b><small>${S.me.email}</small></div><span class="tag y">${t('owner')}</span></div>${S.mem.map((m, i) => `<div class="card"><div class="row"><div class="av" style="background:none;border:1.5px solid var(--b);color:var(--t)">${m.n[0].toUpperCase()}</div><div class="fx"><b>${m.n}</b><small>${m.e}</small></div><span class="tag">${t('guest')}</span><button class="ib d" style="border:0;width:34px" data-a="delm" data-p="${i}">${ic('trash', 18)}</button></div>${['gate', 'lights', 'routines'].map(k => `<div class="prm"><span>${t(k)}</span>${sw(m.p[k], 'perm', i, k)}</div>`).join('')}</div>`).join('')}<button class="btn o" data-a="go" data-p="addm">${t('invite')}</button>`,
-    s: () => `<div class="card row" data-a="go" data-p="face" style="cursor:pointer"><div class="ico">${ic('face')}</div><div class="fx"><b>${t('face')}</b></div>${ic('chev', 18)}</div><p class="lbl">${t('lang')}</p>${lb()}<button class="btn o" data-a="out">${t('logout')}</button>`
+    s: () => `<div class="card row" data-a="go" data-p="face" style="cursor:pointer"><div class="ico">${ic('face')}</div><div class="fx"><b>${t('face')}</b></div>${ic('chev', 18)}</div><p class="lbl">${t('lang')}</p>${lb()}<button class="btn o" data-a="out">${t('logout')}</button>`,
+    g: () => {
+        const x = S.sec;
+        if (!x) return `<p class="sub">${S.secErr || '...'}</p>`;
+        const open = x.gate.state == 'open';
+        const gs = !x.gate.online ? ['goffline', 'r'] : open ? ['gopen', x.alarm.armed ? 'r' : 'y'] : ['gclosed', 'g'];
+        return `<div class="card"><div class="row"><div class="ico">${ic('gate')}</div><div class="fx"><b>${t('garage')}</b><small>${t('gate')}</small></div><span class="tag ${gs[1]}">${t(gs[0])}</span></div></div>
+        <div class="card row"><div class="ico">${ic('shield')}</div><div class="fx"><b>${t('alarm')}</b><small>${x.alarm.armed ? t('armed') : t('disarmed')}</small></div>${sw(x.alarm.armed, 'alarm', 0)}</div>
+        <button class="btn o" data-a="gate" data-p="${open ? 'closed' : 'open'}">${t(open ? 'bclose' : 'bopen')}</button>
+        <p class="err">${S.secErr || ''}</p>`
+    },
 };
 function render() { app.innerHTML = V[S.v]() }
 function go(v) { clearInterval(S.tm); S.v = v; if (v == 'forgot') S.step = 1; if (v == 'face') S.fs = 0; render() }
@@ -73,7 +83,7 @@ async function api(path, { method = 'POST', body, token } = {}) {
     if (!r.ok) throw { status: r.status, message: data && (data.message || data.error) };
     return data;
 }
-function saveTokens(d) { store.set('tc_access', d.access_token); store.set('tc_refresh', d.refreshToken) }
+function saveTokens(d) { store.set('tc_access', d.accessToken || d.access_token); store.set('tc_refresh', d.refreshToken || d.refresh_token) }
 function saveSession(d) {
     saveTokens(d);
     S.me = { id: d.user.id, name: d.user.full_name, email: d.user.email };
@@ -83,7 +93,7 @@ async function restoreSession() {
     try {
         const t = await api('/refresh', { body: { refresh_token: rt } });
         saveTokens(t); // o refresh token antigo já foi revogado: guardar o novo de imediato
-        const m = await api('/me', { method: 'GET', token: t.accessToken });
+        const m = await api('/me', { method: 'GET', token: t.accessToken || t.access_token });
         S.me = { id: m.user.id, name: m.user.full_name, email: m.user.email };
         return true;
     } catch (e) {
@@ -164,9 +174,33 @@ async function doOut() {
     const rt = store.get('tc_refresh');
     if (rt) api('/logout', { body: { refresh_token: rt } }).catch(() => { });
     store.del('tc_access'); store.del('tc_refresh');
-    S.me = null; go('login');
+    S.me = null; S.sec = null; go('login');
+}
+async function sec(path, method, body) {
+    const r = await fetch('/security' + path, {
+        method: method || 'GET',
+        headers: { 'Authorization': 'Bearer ' + store.get('tc_access'), 'Content-Type': 'application/json' },
+        body: body ? JSON.stringify(body) : undefined
+    });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(d.error || 'Error');
+    return d;
+}
+async function loadSec() {
+    try { S.sec = await sec('/garage'); S.secErr = '' }
+    catch (e) { S.secErr = e.message }
+    render();
+}
+async function doAlarm(armed) {
+    try { await sec('/alarm', 'PUT', { armed }) } catch (e) { S.secErr = e.message }
+    loadSec();
+}
+async function doGate(state) {
+    try { await sec('/gate', 'POST', { state }) } catch (e) { S.secErr = e.message }
+    loadSec();
 }
 async function doFace(btn) {
+    if (!confirm('Seu rosto será usado para reconhecimento facial. Guardamos só uma representação numérica, não a foto. Você aceita?')) return;
     btn.disabled = true;
     try {
         await camStart();
@@ -175,6 +209,7 @@ async function doFace(btn) {
             render(); attachCam();
             await new Promise(r => setTimeout(r, 2500));
             const shot = await camShot();
+            await uploadFace(ang[S.fs - 1], shot);
         }
         S.fs = 4;
     } catch (e) {
@@ -192,7 +227,7 @@ async function uploadFace(angle, blob) {
     fd.append('angle', angle);
     fd.append('consent', 'true');
     let r;
-    try { r = await fetch(API + '/faces/enroll', { method: 'POST', headers: { Authorization: 'Bearer ' + store.get('tc_access') }, body: fd }) }
+    try { r = await fetch('/faces/enroll', { method: 'POST', headers: { Authorization: 'Bearer ' + store.get('tc_access') }, body: fd }) }
     catch (e) { throw { message: 'Sem conexão com o servidor' } }
     const data = await r.json().catch(() => null);
     if (!r.ok) throw { status: r.status, message: data && data.error };
@@ -206,7 +241,9 @@ function act(a, p, el) {
     else if (a == 'reg') doReg(el)
     else if (a == 'send') doSend(el)
     else if (a == 'reset') doReset(el)
-    else if (a == 'tab') { S.tab = p; render() }
+    else if (a == 'tab') { S.tab = p; render(); if (p == 'g') loadSec() }
+    else if (a == 'alarm') doAlarm(!S.sec.alarm.armed)
+    else if (a == 'gate') doGate(p)
     else if (a == 'ts') { S.sch[p].on = !S.sch[p].on; render() }
     else if (a == 'dels') { S.sch.splice(p, 1); render() }
     else if (a == 'pick') { el.parentNode.querySelectorAll('.chip').forEach(c => c.classList.remove('on')); el.classList.add('on') }
