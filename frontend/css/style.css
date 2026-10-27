@@ -382,6 +382,16 @@ h2 {
     color: var(--y)
 }
 
+.tag.g {
+    color: var(--g);
+    border-color: var(--g)
+}
+
+.tag.r {
+    color: #ff453a;
+    border-color: #ff453a
+}
+
 .sw {
     width: 46px;
     height: 28px;

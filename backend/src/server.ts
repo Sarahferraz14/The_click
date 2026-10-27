@@ -3,6 +3,7 @@ import express from "express";
 import path from "node:path";
 import authRoutes from "./routes/auth.routes";
 import faceRoutes from "./routes/faces_routes"
+import securityRoutes from "./routes/security.routes";
 
 const app = express();
 app.use(express.json());
@@ -23,3 +24,5 @@ app.listen(port, () => {
 });
 
 app.use("/faces", faceRoutes);
+
+app.use("/security", securityRoutes);
