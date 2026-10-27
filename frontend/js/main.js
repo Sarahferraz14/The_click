@@ -37,7 +37,7 @@ const V = {
     addm: () => `<div class="scr">${hd(t('invite'), 'home')}${fld('nm', 'user', 'text', t('name'), 'name')}${fld('em', 'mail', 'email', t('email'), 'email')}<button class="btn" data-a="addm">${t('invite')}</button></div>`,
     face: () => {
         const f = S.fs, txt = [t('face'), t('front'), t('left'), t('right'), t('done')][f], x = f == 2 ? -16 : f == 3 ? 16 : 0;
-        return `<div class="scr">${hd(t('face'), 'home')}<div class="ring ${f == 4 ? 'ok' : f ? 'run' : ''}"><div class="scan"></div><div style="transform:translateX(${x}px);transition:.5s">${ic(f == 4 ? 'check' : 'user', f == 4 ? 80 : 110)}</div></div><h2 style="text-align:center">${txt}</h2><div class="dots" style="margin-top:16px">${[1, 2, 3].map(i => `<i class="${f >= i ? 'on' : ''}"></i>`).join('')}</div>${f == 0 ? `<button class="btn" data-a="fstart">${t('start')}</button>` : f == 4 ? `<button class="btn o" data-a="go" data-p="home">${t('save')}</button>` : ''}</div>`
+        return `<div class="scr">${hd(t('face'), 'home')}<div class="ring ${f == 4 ? 'ok' : f ? 'run' : ''}">${f >= 1 && f <= 3 ? '<video id="cam" playsinline muted style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1)"></video>' : ''}<div class="scan"></div><div style="transform:translateX(${x}px);transition:.5s">${ic(f == 4 ? 'check' : 'user', f == 4 ? 80 : 110)}</div></div><h2 style="text-align:center">${txt}</h2><p class="err" id="err" style="text-align:center"></p><div class="dots" style="margin-top:16px">${[1, 2, 3].map(i => `<i class="${f >= i ? 'on' : ''}"></i>`).join('')}</div>${f == 0 ? `<button class="btn" data-a="fstart">${t('start')}</button>` : f == 4 ? `<button class="btn o" data-a="go" data-p="home">${t('save')}</button>` : ''}</div>`
     }
 };
 const H = {
@@ -90,6 +90,21 @@ async function restoreSession() {
         if (e.status == 401) { store.del('tc_access'); store.del('tc_refresh') }
         return false;
     }
+}
+let cam = null;
+async function camStart() {
+    cam = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } },
+        audio: false
+    });
+}
+function camStop() { if (cam) { cam.getTracks().forEach(t => t.stop()); cam = null } }
+function attachCam() { const v = $('#cam'); if (v && cam) {v.srcObject = cam; v.play().catch(() => { }) } }
+function camShot() {
+    const v = $('#cam'), c = document.createElement('canvas');
+    c.width = v.videoWidth; c.height = v.videoHeight;
+    c.getContext('2d').drawImage(v, 0, 0);
+    return new Promise(r => c.toBlob(r, 'image/jpeg', 0.9));
 }
 async function doLogin(btn) {
     const em = $('#em').value.trim(), pw = $('#pw').value, err = $('#err');
@@ -151,6 +166,37 @@ async function doOut() {
     store.del('tc_access'); store.del('tc_refresh');
     S.me = null; go('login');
 }
+async function doFace(btn) {
+    btn.disabled = true;
+    try {
+        await camStart();
+        const ang = ['front', 'left', 'right'];
+        for (S.fs = 1; S.fs <= 3; S.fs++) {
+            render(); attachCam();
+            await new Promise(r => setTimeout(r, 2500));
+            const shot = await camShot();
+        }
+        S.fs = 4;
+    } catch (e) {
+        S.fs = 0;
+        render();
+        $('#err').textContent = e.name == 'NotAllowedError' ? 'Permissão negada para acessar a câmera' : (e.message || 'Erro ao acessar a câmera');
+        return;
+    } finally { camStop() }
+    render();
+}
+
+async function uploadFace(angle, blob) {
+    const fd = new FormData();
+    fd.append('image', blob, 'face.jpg');
+    fd.append('angle', angle);
+    fd.append('consent', 'true');
+    let r;
+    try { r = await fetch(API + '/faces/enroll', { method: 'POST', headers: { Authorization: 'Bearer ' + store.get('tc_access') }, body: fd }) }
+    catch (e) { throw { message: 'Sem conexão com o servidor' } }
+    const data = await r.json().catch(() => null);
+    if (!r.ok) throw { status: r.status, message: data && data.error };
+}
 
 function act(a, p, el) {
     if (a == 'go') go(p);
@@ -169,7 +215,7 @@ function act(a, p, el) {
     else if (a == 'perm') { const m = S.mem[p]; m.p[el.dataset.k] = !m.p[el.dataset.k]; render() }
     else if (a == 'delm') { S.mem.splice(p, 1); render() }
     else if (a == 'addm') { if (chk(['nm', 'em'])) { S.mem.push({ n: $('#nm').value.trim(), e: $('#em').value.trim(), p: { gate: 0, lights: 1, routines: 0 } }); S.tab = 'f'; go('home'); toast() } }
-    else if (a == 'fstart') { S.fs = 1; render(); S.tm = setInterval(() => { S.fs++; render(); if (S.fs >= 4) clearInterval(S.tm) }, 1800) }
+    else if (a == 'fstart') doFace(el)
     else if (a == 'out') doOut()
 }
 app.addEventListener('click', e => { const a = e.target.closest('[data-a]'); if (a) act(a.dataset.a, a.dataset.p, a) });
