@@ -126,7 +126,7 @@ export async function recognizeFace(req: AuthRequest, res: Response) {
         const best = rows[0];
         const recognized = !!best && best.similarity >= MATCH_THRESHOLD;
 
-        await prisma.event.create({
+        const event = await prisma.event.create({
             data: {
                 home_id: member.home_id,
                 person_id: recognized ? best.person_id : null,
@@ -136,10 +136,33 @@ export async function recognizeFace(req: AuthRequest, res: Response) {
             },
         });
 
+        let alerted = false;
+        if (!recognized) {
+            const home = await prisma.home.findUnique({ where: { id: member.home_id } });
+            if (home?.alarm_armed) {
+                const since = new Date(Date.now() - 5 * 60 * 1000);
+                const recent = await prisma.alert.findFirst({
+                    where: { home_id: member.home_id, kind: 'unknown_face', status: 'open', detected_at: { gte: since } },
+                });
+                if (!recent) {
+                    await prisma.alert.create({
+                        data: {
+                            home_id: member.home_id,
+                            kind: 'unknown_face',
+                            severity: 'critical',
+                            title: 'Rosto desconhecido com o alarme armado!',
+                            triggered_by_event_id: event.id,
+                        },
+                    });
+                    alerted = true;
+                }
+            }
+        }
+
         return res.json(
             recognized
                 ? { recognized: true, name: best.full_name, confidence: best.similarity }
-                : { recognized: false }
+                : { recognized: false, alerted }
         );
     } catch (error) {
         console.error(error);
