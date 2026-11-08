@@ -1,6 +1,7 @@
 import type { Response } from 'express';
 import { prisma } from '../lib/prisma'
 import type { AuthRequest } from '../middleware/auth';
+import { sendArduino } from '../lib/arduino';
 
 async function getMember(userId: string) {
     return (
@@ -77,6 +78,7 @@ export async function setGate(req: AuthRequest, res: Response) {
         if (!gate.is_online) return res.status(409).json({ error: 'Portão offline!' });
 
         const updated = await prisma.device.update({
+            sendArduino(state === 'open' ? 'GATE:OPEN' : 'GATE:CLOSE');
             where: { id: gate.id },
             data: { is_on: state == 'open', last_seen_at: new Date() },
         });
